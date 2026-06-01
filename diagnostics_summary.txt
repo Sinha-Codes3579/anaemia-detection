@@ -1,0 +1,21 @@
+============================================================
+ANEMIA DETECTION MODEL DIAGNOSTICS REPORT
+============================================================
+
+Model: EfficientNet
+Classes: ['anaemic', 'non_anaemic']
+
+ACCURACY RESULTS:
+  Training Accuracy:    99.83%
+  Validation Accuracy:  100.00%
+  Test Accuracy:        99.37%
+  Train-Validation Gap: -0.17%
+  Validation-Test Gap:  0.63%
+
+CONFUSION MATRIX (Validation):
+  [[ 385     0]
+   [   0   254]]
+
+DIAGNOSIS:
+  ✅ GOOD GENERALIZATION
+  Model performs consistently across datasets
