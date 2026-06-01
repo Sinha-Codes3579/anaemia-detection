@@ -1,0 +1,20 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.ipynb_checkpoints/
+
+# Logs and caches
+*.cache
+logs/
+
+# Temporary files
+/tmp/
+*.tmp
+
+# Results (too many annotated images)
+results/pipeline_output/
+
+# Large pt files we don't need
+yolo26n.pt
+yolov8n.pt
