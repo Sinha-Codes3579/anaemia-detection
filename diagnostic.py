@@ -20,7 +20,7 @@ def load_model_and_data(model_type='efficientnet'):
     # 1. Load your trained model
     model = create_model(model_type, num_classes=config.NUM_CLASSES)
     
-    # Update this path to your ACTUAL saved model
+    # update this path to your ACTUAL saved model
     model_path = config.MODEL_SAVE_PATH.replace('.pth', f'_{model_type}.pth')
     
     if os.path.exists(model_path):
@@ -38,7 +38,7 @@ def load_model_and_data(model_type='efficientnet'):
     model.eval()
     
     # 2. Load data
-    print("\n📊 Loading dataset...")
+    print("\n Loading dataset...")
     data_manager = DataManager(config)
     data_manager.discover_data()
     train_loader, val_loader, test_loader = data_manager.get_data_loaders()
@@ -55,12 +55,12 @@ def run_diagnostics():
     model, train_loader, val_loader, test_loader, device, config = load_model_and_data('efficientnet')
     
     if model is None:
-        print("❌ Could not load model. Exiting.")
+        print(" Could not load model. Exiting.")
         return
     
-    print(f"\n📈 Model: EfficientNet")
-    print(f"📈 Classes: {config.CLASS_NAMES}")
-    print(f"📈 Device: {device}")
+    print(f"\n Model: EfficientNet")
+    print(f" Classes: {config.CLASS_NAMES}")
+    print(f" Device: {device}")
     
     # Evaluate function
     def evaluate_loader(loader, loader_name):

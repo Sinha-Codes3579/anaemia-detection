@@ -8,7 +8,7 @@ def check_data_structure():
     print(f"Base path: {base_path}")
     
     if not os.path.exists(base_path):
-        print("❌ Data directory doesn't exist!")
+        print("🔔 Data directory doesn't exist!")
         return
     
     for item in os.listdir(base_path):

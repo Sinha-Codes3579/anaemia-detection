@@ -8,7 +8,7 @@ import albumentations as A
 from albumentations.pytorch import ToTensorV2
 
 class YCbCrEnhance(A.ImageOnlyTransform):
-    """Convert to YCbCr, enhance Cb/Cr channels, convert back — highlights nail pallor"""
+    """Convert to YCbCr, enhance Cb/Cr channels, convert back highlights nail pallor"""
     def apply(self, img, **params):
         ycbcr = cv2.cvtColor(img, cv2.COLOR_RGB2YCrCb)
         # Enhance chrominance channels (Cb, Cr carry color/pallor info)
@@ -85,13 +85,13 @@ class DataManager:
                   paths_list.append(os.path.join(folder, f))
                   labels_list.append(cls_idx)
 
-      print(f"✅ Train : {len(self.train_paths)} images")
-      print(f"✅ Val   : {len(self.val_paths)} images")
-      print(f"✅ Test  : {len(self.test_paths)} images")
+      print(f" Train : {len(self.train_paths)} images")
+      print(f" Val   : {len(self.val_paths)} images")
+      print(f" Test  : {len(self.test_paths)} images")
 
-      assert len(self.train_paths) > 0, "❌ No training images found!"
-      assert len(self.val_paths)   > 0, "❌ No validation images found!"
-      assert len(self.test_paths)  > 0, "❌ No test images found!"
+      assert len(self.train_paths) > 0, " No training images found!"
+      assert len(self.val_paths)   > 0, " No validation images found!"
+      assert len(self.test_paths)  > 0, " No test images found!"
 
       return self
     

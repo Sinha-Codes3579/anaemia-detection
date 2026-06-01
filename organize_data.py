@@ -1,13 +1,12 @@
-# organize_data.py
 import os
 import shutil
 
 def organize_data():
     """Organize the messy data into proper class directories"""
     
-    # Use your actual project path
+    # Use actual project path
     project_root = "/content/drive/MyDrive/anaemiadetect/Anaemia"
-    source_dir = "/content/drive/MyDrive/anaemiadetect"  # Where your images currently are
+    source_dir = "/content/drive/MyDrive/anaemiadetect" 
     target_dir = os.path.join(project_root, "organized_data")
     
     # Create class directories

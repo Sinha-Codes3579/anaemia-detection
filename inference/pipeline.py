@@ -18,11 +18,11 @@ class AnaemiaPipeline:
         self.device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
         print(f"Pipeline running on: {self.device}")
 
-        # ── Load YOLOv8 nail detector ──────────────────────────────────────
+        # load YOLOv8 nail detector 
         print(f"Loading YOLO from: {yolo_model_path}")
         self.yolo = YOLO(yolo_model_path)
 
-        # ── Load EfficientNet anaemia classifier ───────────────────────────
+        # load EfficientNet anaemia classifier 
         print(f"Loading CNN from: {cnn_model_path}")
         from models.anaemia_model import EfficientNetAnemia
         self.cnn = EfficientNetAnemia(num_classes=config.NUM_CLASSES)
@@ -30,7 +30,7 @@ class AnaemiaPipeline:
         self.cnn.to(self.device)
         self.cnn.eval()
 
-        # ── Preprocessing for CNN ──────────────────────────────────────────
+        # preprocessing for CNN 
         self.transform = A.Compose([
             A.Resize(*config.IMAGE_SIZE),
             A.Normalize(mean=[0.485, 0.456, 0.406],
@@ -95,8 +95,7 @@ class AnaemiaPipeline:
 
     def predict(self, image_path):
         """
-        Full pipeline on a single image.
-        Returns prediction dict with detection + classification results.
+        full pipeline on a single image and returns prediction dict with detection with classification results.
         """
         # Load image
         image_bgr = cv2.imread(image_path)
@@ -105,7 +104,7 @@ class AnaemiaPipeline:
 
         original = image_bgr.copy()
 
-        # ── Step 1: Detect nails ───────────────────────────────────────────
+        # 1: Detect nails 
         crops, boxes = self.detect_nails(image_bgr)
 
         if len(crops) == 0:
@@ -117,9 +116,9 @@ class AnaemiaPipeline:
             fallback = True
         else:
             fallback = False
-            print(f"✅ Detected {len(crops)} nail region(s)")
+            print(f" Detected {len(crops)} nail region(s)")
 
-        # ── Step 2: Classify each nail crop ───────────────────────────────
+        # 2: Classify each nail crop 
         nail_results = []
         for i, (crop, box) in enumerate(zip(crops, boxes)):
             clf = self.classify_nail(crop)
@@ -132,13 +131,13 @@ class AnaemiaPipeline:
                 'probabilities':    clf['probabilities'],
             })
 
-        # ── Step 3: Aggregate — majority vote across nails ─────────────────
+        # 3: Aggregate — majority vote across nails 
         anaemic_votes     = sum(1 for r in nail_results if r['prediction'] == 'anaemic')
         non_anaemic_votes = len(nail_results) - anaemic_votes
         final_class       = 'anaemic' if anaemic_votes >= non_anaemic_votes else 'non_anaemic'
         avg_confidence    = np.mean([r['cnn_confidence'] for r in nail_results])
 
-        # ── Step 4: Draw annotated image ──────────────────────────────────
+        # 4: Draw annotated image 
         annotated = self.draw_results(original, nail_results, final_class)
 
         return {
@@ -152,7 +151,6 @@ class AnaemiaPipeline:
         }
 
     def draw_results(self, image, nail_results, final_class):
-        """Draw bounding boxes and predictions on image"""
         annotated = image.copy()
 
         for r in nail_results:
@@ -191,7 +189,7 @@ class AnaemiaPipeline:
             if f.lower().endswith(supported)
         ]
 
-        print(f"\n🔍 Running pipeline on {len(image_files)} images...")
+        print(f"\n Running pipeline on {len(image_files)} images...")
         results = []
 
         for img_file in image_files:
@@ -212,7 +210,7 @@ class AnaemiaPipeline:
         # Summary
         if results:
             anaemic_count = sum(1 for r in results if r['final_prediction'] == 'anaemic')
-            print(f"\n📊 Batch Summary:")
+            print(f"\n Batch Summary:")
             print(f"   Total images  : {len(results)}")
             print(f"   Anaemic       : {anaemic_count}")
             print(f"   Non-anaemic   : {len(results) - anaemic_count}")

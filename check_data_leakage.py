@@ -26,7 +26,7 @@ def check_leakage(split1_paths, split1_name, split2_paths, split2_name):
     patient2 = set([extract_patient_id(p) for p in split2_paths])
     patient_overlap = patient1.intersection(patient2)
     
-    print(f"\n🔍 {split1_name} vs {split2_name}:")
+    print(f"\n {split1_name} vs {split2_name}:")
     print(f"   File duplicates: {len(file_overlap)}")
     if file_overlap:
         print(f"   Example duplicates: {list(file_overlap)[:3]}")
@@ -46,7 +46,7 @@ leak_found |= check_leakage(dm.train_paths, "TRAIN", dm.test_paths, "TEST")
 leak_found |= check_leakage(dm.val_paths, "VALIDATION", dm.test_paths, "TEST")
 
 if leak_found:
-    print("\n❌ CRITICAL: Data leakage detected!")
+    print("\n Critical: Data leakage detected!")
     print("   This invalidates your accuracy metrics.")
 else:
-    print("\n✅ No file or patient ID leakage found.")
+    print("\n No file or patient ID leakage found.")

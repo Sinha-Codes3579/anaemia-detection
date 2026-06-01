@@ -1,11 +1,10 @@
-# simple_attention.py - Working attention visualization
 import os
 import sys
 import torch
 import numpy as np
 import matplotlib.pyplot as plt
 
-# Add project path
+# add project path
 sys.path.append('/content/drive/MyDrive/anaemiadetect/Anaemia')
 
 from config.config import Config

@@ -79,7 +79,6 @@ class EfficientNetAnemia(nn.Module):
         features = self.backbone(x)
         return self.classifier(features)
     
-    # Remove get_param_groups entirely
 
 class ResNetAnemia(nn.Module):
     """Using ResNet as backbone"""

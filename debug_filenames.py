@@ -1,4 +1,3 @@
-# debug_filenames.py
 import os
 
 data_dir = "/content/drive/MyDrive/anaemiadetect/Anaemia/data"

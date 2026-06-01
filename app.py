@@ -11,14 +11,14 @@ sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 from config.config import Config
 from inference.pipeline import AnaemiaPipeline
 
-# ── Page config ────────────────────────────────────────────────────────────────
+# page config 
 st.set_page_config(
     page_title="Anaemia Detection from Nail Images",
     page_icon="🩺",
     layout="centered"
 )
 
-# ── Load pipeline (cached) ─────────────────────────────────────────────────────
+# load pipeline 
 @st.cache_resource
 def load_pipeline():
     config = Config()
@@ -34,7 +34,7 @@ def load_pipeline():
 
     return AnaemiaPipeline(config, cnn_path, yolo_path)
 
-# ── UI ─────────────────────────────────────────────────────────────────────────
+# UI 
 st.title("🩺 Nail-based Anaemia Detection")
 st.markdown("""
 **Non-invasive anaemia screening from fingernail images using Deep Learning**
@@ -43,13 +43,13 @@ st.markdown("""
 """)
 
 st.info(
-    "📌 **Disclaimer:** This tool is for research purposes only "
+    "🚨 **Disclaimer:** This tool is for research purposes only "
     "and is not a substitute for clinical diagnosis."
 )
 
 st.divider()
 
-# ── Upload ─────────────────────────────────────────────────────────────────────
+# upload 
 uploaded_file = st.file_uploader(
     "Upload a fingernail or hand image",
     type=['jpg', 'jpeg', 'png'],
@@ -88,7 +88,7 @@ if uploaded_file is not None:
 
         st.divider()
 
-        # ── Main result ────────────────────────────────────────────────────
+        # main result 
         pred  = result['final_prediction']
         conf  = result['confidence']
         color = "🔴" if pred == 'anaemic' else "🟢"
@@ -96,16 +96,16 @@ if uploaded_file is not None:
         if pred == 'anaemic':
             st.error(f"## {color} Result: ANAEMIC  ({conf:.1%} confidence)")
             st.warning(
-                "⚠️ Possible signs of anaemia detected in nail coloration. "
+                " Possible signs of anaemia detected in nail coloration. "
                 "Please consult a healthcare professional for proper diagnosis."
             )
         else:
             st.success(f"## {color} Result: NON-ANAEMIC  ({conf:.1%} confidence)")
-            st.info("✅ No signs of anaemia detected in nail coloration.")
+            st.info(" No signs of anaemia detected in nail coloration.")
 
         st.divider()
 
-        # ── Nail-level breakdown ───────────────────────────────────────────
+        # nail-level breakdown 
         st.subheader(f"🔬 Nail Analysis  ({result['nail_count']} nail(s) detected)")
 
         if result['fallback_used']:
@@ -133,7 +133,7 @@ if uploaded_file is not None:
 
         st.divider()
 
-        # ── Model info ─────────────────────────────────────────────────────
+        # model info 
         with st.expander("ℹ️ Model Information"):
             st.markdown("""
             | Component | Details |
@@ -149,7 +149,6 @@ if uploaded_file is not None:
         st.error(f"Pipeline error: {result['error']}")
 
 else:
-    # Show sample instructions when no image uploaded
     st.markdown("""
     ### How to use:
     1. Upload a clear photo of fingernails or a hand

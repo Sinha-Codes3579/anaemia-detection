@@ -1,9 +1,7 @@
-# anaemia_detection/main.py
 import os
 import sys
 import argparse
 
-# Add the project root to Python path
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
 from config.config import Config
@@ -12,7 +10,7 @@ from inference.predictor import AnemiaPredictor
 from utils.data_loader import DataManager
 from yolov8.nail_detector import NailDetector
 
-# Conditionally import OpenVINO to avoid errors during training
+# import OpenVINO to avoid errors during training
 try:
     from openvino.model_optimizer import OpenVINOPredictor
     OPENVINO_AVAILABLE = True
@@ -56,7 +54,7 @@ def main():
         elif args.mode == 'train_yolo':
             print("Training YOLOv8 model for nail detection...")
             detector = NailDetector(config)
-            # You need to provide a dataset config file for YOLO training
+            # need to provide a dataset config file for YOLO training
             dataset_config = "yolov8/data_config.yaml"  # You need to create this
             detector.train_yolo(dataset_config)
             
@@ -91,7 +89,7 @@ def main():
             
         elif args.mode == 'evaluate':
             print("Evaluation mode")
-            # Implement comprehensive evaluation
+            # implement the comprehensive evaluation
             try:
                 from training.evaluator import ModelEvaluator
                 evaluator = ModelEvaluator(config)
